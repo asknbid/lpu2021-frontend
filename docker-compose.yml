@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  server:
+    build: ./server
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - ./server:/server
+    ports:
+      - "8000:8000"
+
+  client:
+    build: ./client
+    command: ["npm", "start"]
+    volumes:
+      - ./client:/client
+      - node-modules:/client/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '3000:3000'
+    depends_on:
+      - server
+
+volumes:
+  node-modules:
