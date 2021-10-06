@@ -42,6 +42,15 @@ const PoolForm = () => {
   useEffect(() => {
     async function fetchStocks() {
       {
+      let stocks_response = await getStocks();
+      let StocksOptions = [];
+      for (let item of stocks_response.results) {
+        StocksOptions.push({
+          value: item.id,
+          label: item.name,
+        });
+      }
+      setPoolsOptions(StocksOptions);
         /* 
         Task 1:
             Step 1 out of 4: This function has to handle the getStocks API repsonse.
@@ -50,7 +59,6 @@ const PoolForm = () => {
       */
       }
     }
-
     fetchStocks();
   }, []);
 
@@ -74,25 +82,34 @@ const PoolForm = () => {
       return;
     } 
     // Task 2 : Step 1 out of 4: Add a condition to check if userID is empty.
-    else if (selectedStocks.length === 0) { // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
-      showDangerAlert("Stocks cannot be empty!");
+    if(userID === null)
+    {
+      showDangerAlert("Please enter the UserID !");
+    }
+    
+    else if (selectedStocks.length === 0 && selectedStocks.length <= 4) {   //condition added 
+      // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
+      showDangerAlert("Stocks cannot be empty OR cannot select more then 4 stocks :) ");
       return;
     }
 
     let response = await joinPool({
-      user: "", // Task 1 : Step 3 out of 4: Add userID from the state to the payload.
+      user: "userID", // Task 1 : Step 3 out of 4: Add userID from the state to the payload.
       pool: selectedPool.value,
       stocks: selectedStocks.map((item) => item.value),
     });
 
     if (response.status === 201) {
+      showSuccessAlert("Hey! You have joined pool !");
       // Task 2 : Step 3 out 4: Call the showSuccessAlert function and pass an appropriate message 
-      //                  to alert the user that they have joined the pool.
-    } else {
+      //to alert the user that they have joined the pool.
+    } 
+    else {
       let message = "";
       for (let item of Object.keys(response.data)) {
         message = message.concat(`${item} : ${response.data[item]}\n`);
       }
+      showDangerAlert("Sorry! An error occured ! ");
       // Task 2 : Step 4 out of 4: Call the showDangerAlert function and pass an appropriate message 
       //                  to alert the user that there has been an error.
     }
