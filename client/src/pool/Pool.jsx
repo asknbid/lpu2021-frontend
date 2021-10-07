@@ -87,9 +87,15 @@ const PoolForm = () => {
       showDangerAlert("Please enter the UserID !");
     }
     
-    else if (selectedStocks.length === 0 || selectedStocks.length > 4) {   //condition added 
-      // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
-      showDangerAlert("Stocks cannot be empty OR cannot select more then 4 stocks :) ");
+    else if (selectedStocks.length === 0 ) {   //condition added 
+      
+      showDangerAlert("Stocks cannot be empty");
+      return;
+    }
+    
+      else if (selectedStocks.length > 4) { 
+        // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
+      showDangerAlert("Hey! please select Stocks quantity less than 4 ");
       return;
     }
 
