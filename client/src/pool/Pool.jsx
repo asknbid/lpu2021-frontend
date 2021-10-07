@@ -6,7 +6,6 @@ import Alert from "react-bootstrap/Alert";
 import Select from "react-select";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getPools, getStocks, joinPool } from "./PoolApi";
-
 const PoolForm = () => {
   const [poolsOptions, setPoolsOptions] = useState([]);
 
@@ -49,6 +48,15 @@ const PoolForm = () => {
                     Hint : First have a look at getStocks function defined in PoolApi.jsx
       */
       }
+      let stocks_response = await getStocks();
+      let stocksOptions = [];
+      for (let item of stocks_response.results) {
+        stocksOptions.push({
+          value: item.id,
+          label: item.name,
+        });
+      }
+      setStocksOptions(stocksOptions);
     }
 
     fetchStocks();
@@ -73,21 +81,32 @@ const PoolForm = () => {
       showDangerAlert("Please select a pool!");
       return;
     } 
+
+    else if (userID === "") {
+      showDangerAlert("UserID cannot be empty!");
+      return;
+    }
     // Task 2 : Step 1 out of 4: Add a condition to check if userID is empty.
     else if (selectedStocks.length === 0) { // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
       showDangerAlert("Stocks cannot be empty!");
       return;
     }
 
+    else if (selectedStocks.length > 4) { 
+      showDangerAlert("More than 4 stocks cannot be selected");
+      return;
+    }
+
     let response = await joinPool({
-      user: "", // Task 1 : Step 3 out of 4: Add userID from the state to the payload.
-      pool: selectedPool.value,
+      user: userID, // Task 1 : Step 3 out of 4: Add userID from the state to the payload.
+      pool: selectedPool.value, 
       stocks: selectedStocks.map((item) => item.value),
     });
 
     if (response.status === 201) {
       // Task 2 : Step 3 out 4: Call the showSuccessAlert function and pass an appropriate message 
       //                  to alert the user that they have joined the pool.
+      showSuccessAlert("You have joined the pool")
     } else {
       let message = "";
       for (let item of Object.keys(response.data)) {
@@ -95,6 +114,7 @@ const PoolForm = () => {
       }
       // Task 2 : Step 4 out of 4: Call the showDangerAlert function and pass an appropriate message 
       //                  to alert the user that there has been an error.
+      showDangerAlert("Sorry, an error has occured");
     }
   };
 
@@ -130,6 +150,7 @@ const PoolForm = () => {
               value={userID}
               onChange={(event) => setUserID(event.target.value)}
             />
+            {console.log(userID)}
           </Form.Group>
         </Form>
       </Row>
