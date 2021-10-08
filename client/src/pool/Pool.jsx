@@ -85,6 +85,10 @@ const PoolForm = () => {
       return;
     } 
     // Task 2 : Step 1 out of 4: Add a condition to check if userID is empty.
+    else if(userID === null){
+      showDangerAlert("Please provide a user id.");
+      return;
+    }
     else if (selectedStocks.length === 0) { // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
       showDangerAlert("Stocks cannot be empty!");
       return;
