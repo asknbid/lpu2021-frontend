@@ -48,6 +48,17 @@ const PoolForm = () => {
                     Refer the above fetchPools function and complete this function similarly.
                     Hint : First have a look at getStocks function defined in PoolApi.jsx
       */
+     let stocks_reponse = await getStocks();
+     // console.log(stocks_response);
+     let stocksOptions = [];
+     for(let item of stocks_response.results){
+       // console.log(item);
+       stocksOptions.push({
+         value: item.id,
+         label: item.name,
+       });
+     }
+        setStocksOptions(stocksOptions);
       }
     }
 
