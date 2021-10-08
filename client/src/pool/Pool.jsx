@@ -89,8 +89,8 @@ const PoolForm = () => {
       showDangerAlert("Please provide a user id.");
       return;
     }
-    else if (selectedStocks.length === 0) { // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
-      showDangerAlert("Stocks cannot be empty!");
+    else if (selectedStocks.length > 4) { // Task 2 : Step 2 out of 4: Edit this condition to not let the user select more than 4 stocks. 
+      showDangerAlert("Please select less than or equal to 4 stocks");
       return;
     }
 
@@ -103,6 +103,7 @@ const PoolForm = () => {
     if (response.status === 201) {
       // Task 2 : Step 3 out 4: Call the showSuccessAlert function and pass an appropriate message 
       //                  to alert the user that they have joined the pool.
+      showSuccessAlert("You have successfully joined the pool!");
     } else {
       let message = "";
       for (let item of Object.keys(response.data)) {
