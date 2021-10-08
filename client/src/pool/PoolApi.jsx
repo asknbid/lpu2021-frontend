@@ -21,6 +21,12 @@ async function getStocks() {
                 Refer the above getPools function and complete this function similarly.
                 The endpoint to get stocks is "stocks/"
   */
+  let response= await api
+    .get("stocks/")
+    .then((response) => response)
+    .catch((error)=> error.response);
+  
+  return response.data;
   }
 }
 
