@@ -91,7 +91,7 @@ const PoolForm = () => {
     }
 
     let response = await joinPool({
-      user: "", // Task 1 : Step 3 out of 4: Add userID from the state to the payload.
+      user: userID, // Task 1 : Step 3 out of 4: Add userID from the state to the payload.
       pool: selectedPool.value,
       stocks: selectedStocks.map((item) => item.value),
     });
