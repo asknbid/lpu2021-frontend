@@ -111,6 +111,7 @@ const PoolForm = () => {
       }
       // Task 2 : Step 4 out of 4: Call the showDangerAlert function and pass an appropriate message 
       //                  to alert the user that there has been an error.
+      showDangerAlert("User does not exist");
     }
   };
 
