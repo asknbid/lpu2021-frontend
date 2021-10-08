@@ -32,7 +32,7 @@ async function getStocks() {
 
 async function joinPool(payload) {
   let response = await api
-    .post() // Task 1: Step 4 out of 4: Pass the endpoint "entries/" and payload to the post request. This is the last step of Task 1.
+    .post("entries/",payload) // Task 1: Step 4 out of 4: Pass the endpoint "entries/" and payload to the post request. This is the last step of Task 1.
     .then((response) => response)
     .catch((error) => error.response);
   return response;
