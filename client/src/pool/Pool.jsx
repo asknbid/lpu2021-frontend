@@ -38,6 +38,7 @@ const PoolForm = () => {
     }
     fetchPools();
   }, []);
+  
 
   useEffect(() => {
     async function fetchStocks() {
@@ -99,11 +100,13 @@ const PoolForm = () => {
       pool: selectedPool.value,
       stocks: selectedStocks.map((item) => item.value),
     });
-
+    // console.log(poolsOptions[3].label);
+    // console.log(response);
     if (response.status === 201) {
       // Task 2 : Step 3 out 4: Call the showSuccessAlert function and pass an appropriate message 
       //                  to alert the user that they have joined the pool.
-      showSuccessAlert("You have successfully joined the pool!");
+      let index = selectedPool.value;
+      showSuccessAlert("You have successfully joined "+ poolsOptions[index-1].label+" pool!");
     } else {
       let message = "";
       for (let item of Object.keys(response.data)) {
@@ -111,7 +114,7 @@ const PoolForm = () => {
       }
       // Task 2 : Step 4 out of 4: Call the showDangerAlert function and pass an appropriate message 
       //                  to alert the user that there has been an error.
-      showDangerAlert("User does not exist");
+      showDangerAlert("User with name: "+userID +" does not exist");
     }
   };
 
