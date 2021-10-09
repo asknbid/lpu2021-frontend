@@ -61,37 +61,17 @@ const Leaderboard = () => {
             </tr>
           </thead>
           <tbody>
-            {/*
-              Task 3 : Step 1 out of 3: Delete the static data.
-            */}
-            <tr>
-              <td>1</td>
-              <td>{30}</td>
-              <td>{"JBelfort"}</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>{20}</td>
-              <td>{"Rakesh"}</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>{10}</td>
-              <td>{"HMehta"}</td>
-            </tr>
             {selectedPool !== null
               ? entries
                   .filter((entry) => entry.pool === selectedPool.value)
-                  .sort((a, b) => (a.returns > b.returns ? 1 : -1)) // Task 3 : Step 3 out of 3: Check whether the sorting condition is correct. This is you final task.
-                  .map(
-                    (entry, index) => 
-                    null
-                    /*
-                      Task 3 : Step 2 out of 3: 
-                        Map the appropriate fields of the entry to the table row.
-                        Check the format of the static data for reference.
-                    */
-                  )
+                  .sort((a, b) => (a.returns > b.returns ? -1 : 1))
+                  .map((entry, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{entry.returns}</td>
+                      <td>{entry.user}</td>
+                    </tr>
+                  ))
               : null}
           </tbody>
         </Table>
